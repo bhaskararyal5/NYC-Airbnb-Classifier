@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Room Type Predictor · NYC Airbnb</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="sky"></div>
+<svg class="skyline" id="skyline" viewBox="0 0 1200 320" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg>
+
+<main class="wrap">
+  <header class="hero">
+    <div>
+      <h1>Light up a listing,<br><span id="typed"></span></h1>
+      <p class="sub">Fill in the details and watch the skyline glow. The model then tells you what kind of room it is.</p>
+    </div>
+  </header>
+
+  <div class="grid">
+    <form class="card" id="form" novalidate>
+      <div class="progress" aria-label="Form progress"><div id="bar"></div></div>
+      <p class="meter"><b id="pct">0%</b> of the skyline is lit</p>
+
+      <h2>Where is it?</h2>
+      <div class="boroughs" id="boroughs"></div>
+      <div class="fields">
+        <div class="full">
+          <label for="neighbourhood">Neighbourhood</label>
+          <input type="text" id="neighbourhood" list="hoods" placeholder="Pick a borough, then start typing" autocomplete="off">
+          <datalist id="hoods"></datalist><div class="err" data-for="neighbourhood"></div>
+        </div>
+        <div><label for="latitude">Latitude</label><input type="number" id="latitude" step="any"><div class="err" data-for="latitude"></div></div>
+        <div><label for="longitude">Longitude</label><input type="number" id="longitude" step="any"><div class="err" data-for="longitude"></div></div>
+      </div>
+
+      <h2>The listing</h2>
+      <div class="fields">
+        <div class="full"><label for="price">Price per night</label>
+          <div class="money"><span>$</span><input type="number" id="price" min="1" step="any" placeholder="150"></div>
+          <input type="range" id="priceRange" min="10" max="1000" value="150" aria-label="Price slider"><div class="err" data-for="price"></div></div>
+        <div><label for="minimum_nights">Minimum nights</label><input type="number" id="minimum_nights" min="1" step="1" placeholder="3"><div class="err" data-for="minimum_nights"></div></div>
+        <div><label for="calculated_host_listings_count">Host’s listings</label><input type="number" id="calculated_host_listings_count" min="1" step="1" placeholder="1"><div class="err" data-for="calculated_host_listings_count"></div></div>
+        <div><label for="number_of_reviews">Number of reviews</label><input type="number" id="number_of_reviews" min="1" step="1" placeholder="25"><div class="err" data-for="number_of_reviews"></div></div>
+        <div><label for="reviews_per_month">Reviews per month</label><input type="number" id="reviews_per_month" min="0.01" step="any" placeholder="1.2"><div class="err" data-for="reviews_per_month"></div></div>
+        <div class="full"><label for="availability_365">Days available per year <b class="rangeval" id="availOut">180</b></label>
+          <input type="range" id="availability_365" min="1" max="365" value="180"></div>
+      </div>
+
+      <div class="actions">
+        <button class="primary" type="submit" id="go"><span>Predict room type</span></button>
+        <button class="ghost" type="button" id="sample">Fill example</button>
+        <button class="ghost" type="button" id="reset">Clear</button>
+      </div>
+    </form>
+
+    <aside class="card result" id="result" aria-live="polite">
+      <div class="empty"><div class="pulse">🏙️</div><p>Your prediction will appear here.</p></div>
+    </aside>
+  </div>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
