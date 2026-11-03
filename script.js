@@ -1,4 +1,4 @@
-const DEFAULT_API = "http://127.0.0.1:8000";
+const DEFAULT_API = "https://nyc-airbnb-classifier.onrender.com";
 const getApi = () => {
   let saved = null;
   try { saved = localStorage.getItem("apiUrl"); } catch (e) {}
