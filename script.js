@@ -1,3 +1,11 @@
+const DEFAULT_API = "http://127.0.0.1:8000";
+const getApi = () => {
+  let saved = null;
+  try { saved = localStorage.getItem("apiUrl"); } catch (e) {}
+  return (saved || DEFAULT_API).replace(/\/+$/, "");
+};
+const setApi = url => { try { localStorage.setItem("apiUrl", url.trim()); } catch (e) {} };
+
 // Order must match model.classes_ (scikit-learn sorts labels alphabetically by default).
 const CLASSES = ["Entire home/apt", "Private room", "Shared room"];
 const ICONS   = ["🏠", "🛏️", "👥"];
@@ -119,7 +127,7 @@ function showError(html){ $("result").innerHTML = `<div class="errbox">${html}</
 $("form").addEventListener("submit", async e => {
   e.preventDefault();
   const data = validate(); if(!data) return;
-  const btn = $("go"), base = $("apiUrl").value.trim().replace(/\/+$/,"");
+  const btn = $("go"), base = getApi();
   btn.disabled = true; btn.classList.add("loading"); document.body.classList.add("scan");
   try{
     const res = await fetch(base + "/predict", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(data)});
@@ -160,5 +168,11 @@ function render(r){
   if(innerWidth < 860) $("result").scrollIntoView({behavior:"smooth", block:"start"});
 }
 
-fetch($("apiUrl").value.trim() + "/").then(r => $("dot").className = r.ok ? "dot ok" : "dot bad").catch(() => $("dot").className = "dot bad");
+function checkApi(){
+  $("dot").className = "dot";
+  fetch(getApi() + "/").then(r => $("dot").className = r.ok ? "dot ok" : "dot bad").catch(() => $("dot").className = "dot bad");
+}
+$("apiUrl").value = getApi();
+$("apiUrl").addEventListener("change", e => { setApi(e.target.value); e.target.value = getApi(); checkApi(); });
+checkApi();
 progress();
