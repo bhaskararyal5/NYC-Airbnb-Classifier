@@ -200,10 +200,5 @@ Python · pandas · NumPy · scikit-learn · joblib · FastAPI · Pydantic · Uv
 
 Dataset: [New York City Airbnb Open Data](https://www.kaggle.com/datasets/dgomonov/new-york-city-airbnb-open-data) on Kaggle.
 
-## 📄 License
-
-Add a license (for example MIT) and state it here.
-
----
 
 <div align="center">Built by <a href="https://github.com/bhaskararyal5">@bhaskararyal5</a></div>
